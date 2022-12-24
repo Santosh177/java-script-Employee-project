@@ -1,58 +1,82 @@
-const userData = [
-    {id:1,name:"john",age:"18",  profession:"developer"},
-    {id:2, name:"jack",age:"20", profession:"developer"},
-    {id:3, name:"karen", age:"19",profession:"admin"}
-];
-
-userData.map( function iterator(item){
-    item.age = Number(item.age);
-});
-console.log(userData);
-let result = document.getElementById("result");
 let dropdown = document.getElementById("dropdown");
-let button = document.getElementById("btn");
-function filterByProfession(){
-    result.innerHTML="";
+let result = document.getElementById("result");
+let filterbtn = document.getElementById("filterBtn");
+
+
+let arr = [
+    { id: 1, name: "john  ", age: "18  ", profession: "developer" },
+    { id: 2, name: "jack", age: "20", profession: "developer" },
+    { id: 3, name: "Karen", age: "19", profession: "admin" }
+]
+
+// result.append(arr.jack);
+
+// arr.forEach((item)=>{
+//     let div = document.createElement("div");
+//     div.innerHTML = item;
+//     result.append(div);
+// });
+    
+
+
+function filterbyprofession() {
+    result.innerHTML = "";
     let dropdownValue = dropdown.value;
-    console.log(dropdownValue);
-    userData.forEach((item) =>{
-        if(dropdownValue === "profession"){
-            alert("Please select a profession");
-            return;
-        }
-        if(item.profession === dropdownValue){
-        let div = document.createElement("div");
-        div.innerText = item.id + "  Name:" + item.name + "  Profession:" + item.profession + "  Age:" + item.age;
-        result.append(div);
+
+    if (dropdownValue == "profession") {
+        alert("Select a profession before clicking the button.");
+        return;
+    }
+
+
+    arr.forEach((item) => {
+        if (item.profession === dropdownValue) {
+            let divElement = document.createElement("div");
+           // div.setAttribute("class");
+            divElement.style.borderStyle="solid";
+            divElement.style.margin="15px 0px";
+            divElement.style.borderRadius="10px";
+            divElement.innerText = item.id + ". Name: " + item.name + "  Profession: " + item.profession + "  Age: " + item.age;
+            result.append(divElement);
         }
     })
+    console.log(arr);
+}
+
+filterbtn.addEventListener("click", filterbyprofession);
+
+let addName = document.getElementById("name");
+let addProfession = document.getElementById("profession");
+let addAge = document.getElementById("age");
+
+let aadBtn = document.getElementById("adduser");
+
+
+function addUser() {
+    let Uname = addName.value;
+    let age = addAge.value;
+    let prf = addProfession.value;
+
+    let x = arr.length;
+    ++x;
+
+    let brr = { id: x, name: `${Uname}`, age: `${age}`, profession: `${prf}` }
+    if(Uname !== "" && age !== "" && prf !== ""){
+        arr.push(brr);
+    }
+    else{
+        alert("fill complete detail.")
+    }
+
+    console.log(arr);
+
+    addName.value = "";
+    addAge.value = "";
+    addProfession.value = "";
 
 }
 
-button.addEventListener('click', filterByProfession)
-const tname = document.querySelector("#tname");
-const tpname = document.querySelector("#tpname");
-const taname = document.querySelector("#taname");
-const abutton = document.querySelector("#ad");
-const cartBody = document.querySelector(".cart-body");
-let cartItem = {};
-const updateCart = () =>{
-    var tr1= document.createElement("tr");
-    var tr2= document.createElement("tr");
-    var tr3= document.createElement("tr");
-    tr1.innerHTML = `<td>${cartItem.tname}</td><td>${cartItem.tpname}</td><td>${cartItem.taname}`;
-    cartBody.appendChild(tr1);
-};
- 
-const addItemToCart = () =>{
-    cartItem = {
-        tname: tname.value,
-        tpname: tpname.value,
-        taname: taname.value,
-    }
-    updateCart();
-};
-abutton.addEventListener("click",addItemToCart);
+aadBtn.addEventListener("click", addUser);
 
 
 
